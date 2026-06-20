@@ -9,5 +9,7 @@ export interface MlPrediction {
   features: Record<string, unknown>;
   anomalyScore: number;
   isAnomaly: boolean;
+  riskLevel?: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  explanation?: string[];
   createdAt: Date;
 }

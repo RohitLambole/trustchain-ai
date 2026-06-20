@@ -6,6 +6,7 @@ import type { Session } from "../../sessions/domain/session.types";
 import type { TrustProfile } from "../../trust-profiles/domain/trust-profile.types";
 import type { User } from "../../users/domain/user.types";
 import type { RiskSeverity, TrustDecision } from "../../../shared/types/common";
+import type { MlPredictionResult } from "../../ml-client/domain/ml-client.types";
 
 export type RiskEngineDecision = "ALLOW" | "ALLOW_MONITOR" | "STEP_UP_TOTP" | "BLOCK" | "LOCK_ACCOUNT" | "CREATE_CASE";
 
@@ -62,4 +63,13 @@ export interface RiskEvaluationResult {
   trustScore: TrustScoreResult;
   aggregate: AggregatedRisk;
   decision: RiskDecision;
+  mlResult?: MlPredictionResult;
+  blockchainAudit?: {
+    auditId: string;
+    eventHash: string;
+    transactionHash?: string;
+    blockNumber?: number;
+    verified: boolean;
+    error?: string;
+  };
 }

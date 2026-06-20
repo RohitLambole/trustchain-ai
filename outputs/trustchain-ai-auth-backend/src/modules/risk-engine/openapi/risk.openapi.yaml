@@ -1,0 +1,88 @@
+paths:
+  /api/risk/evaluate:
+    post:
+      summary: Evaluate identity risk
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [userId, eventType, eventCategory]
+              properties:
+                userId: { type: string, pattern: "^[0-9a-fA-F]{24}$" }
+                sessionId: { type: string, pattern: "^[0-9a-fA-F]{24}$" }
+                deviceId: { type: string, pattern: "^[0-9a-fA-F]{24}$" }
+                eventType: { type: string, example: HIGH_RISK_LOGIN_DECISION }
+                eventCategory: { type: string, example: AUTHENTICATION }
+                action: { type: string, example: auth.login }
+                resource: { type: string, example: sessions }
+                context: { type: object, additionalProperties: true }
+      responses:
+        "201":
+          description: Risk evaluation result including ML prediction result when available
+  /api/risk/events:
+    get:
+      summary: List risk events
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          schema: { type: string }
+        - in: query
+          name: severity
+          schema: { type: string, enum: [LOW, MEDIUM, HIGH, CRITICAL] }
+        - in: query
+          name: eventCategory
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+        - in: query
+          name: skip
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        "200":
+          description: Risk event list
+  /api/risk/high-risk-events:
+    get:
+      summary: List high and critical risk events
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+      responses:
+        "200":
+          description: High risk events
+  /api/risk/trust-score/{userId}:
+    get:
+      summary: Get current trust score and score trend for a user
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema: { type: string, pattern: "^[0-9a-fA-F]{24}$" }
+      responses:
+        "200":
+          description: Trust score profile
+  /api/risk/dashboard:
+    get:
+      summary: Get risk operations dashboard
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard payload containing highRiskEvents, trustScoreTrends, anomalyCounts, mlHealth, riskDistribution, and recentDecisions
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

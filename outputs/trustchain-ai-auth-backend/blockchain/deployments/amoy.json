@@ -1,0 +1,12 @@
+{
+  "network": "amoy",
+  "chainId": 80002,
+  "contractName": "AuditTrail",
+  "address": "0xdAAB6189cF6EB3daC556ae7cD788a24fCfA4c5eA",
+  "deployer": "0x9e0eFAFaf3b7E6Cc75c13af6cea37E7EE4929b52",
+  "owner": "0x9e0eFAFaf3b7E6Cc75c13af6cea37E7EE4929b52",
+  "deploymentTransactionHash": "0xf1c73eddb8ceeccf676b5900f69bc484158a11567322c58d41e3bc70cfae2110",
+  "deploymentBlockNumber": 40486950,
+  "explorerUrl": "https://amoy.polygonscan.com/address/0xdAAB6189cF6EB3daC556ae7cD788a24fCfA4c5eA",
+  "deployedAt": "2026-06-20T13:26:46.441Z"
+}

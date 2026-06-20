@@ -12,6 +12,7 @@ Production-oriented Express + TypeScript authentication module for TrustChain AI
 - Session tracking in MongoDB
 - Device fingerprinting and continuous device trust scoring
 - New device, mismatch, low reputation, and suspicious device risk events
+- Next.js frontend dashboard for customers, analysts, and admins
 - Password reset request and confirmation
 - Mongoose models for `users`, `roles`, `sessions`, and `trust_profiles`
 - Repositories, DTO validation, middleware, and centralized error handling
@@ -82,6 +83,87 @@ src/
     ml-predictions/
       domain/
       persistence/
+```
+
+Frontend app:
+
+```text
+apps/frontend/
+  src/app/
+  src/components/
+  src/lib/
+  src/stores/
+  src/types/
+```
+
+## Local Development Stack
+
+Start the full TrustChain AI stack with:
+
+```bash
+docker compose up --build
+```
+
+or:
+
+```bash
+npm run dev:stack
+```
+
+This starts MongoDB, Ganache, deploys the audit contract, starts the Express backend, starts the FastAPI ML service, and serves the Next.js frontend.
+
+Full instructions:
+
+[LOCAL_DEVELOPMENT.md](./LOCAL_DEVELOPMENT.md)
+
+## Cloud Deployment
+
+Production deployment for hackathon judging uses Railway, MongoDB Atlas, and Polygon Amoy:
+
+[DEPLOYMENT.md](./DEPLOYMENT.md)
+
+## Database Seeding
+
+Seed roles, permissions, demo users, trust profiles, devices, login history, and risk events:
+
+```bash
+npm run seed
+```
+
+Seed docs and demo credentials:
+
+[SEEDING.md](./SEEDING.md)
+
+## Risk Engine APIs
+
+```text
+POST /api/risk/evaluate
+GET  /api/risk/events
+GET  /api/risk/high-risk-events
+GET  /api/risk/trust-score/:userId
+GET  /api/risk/dashboard
+```
+
+Risk evaluations call the FastAPI ML service through `MLClientService` when available. ML responses are persisted in `ml_predictions` and included in the evaluation response as `mlResult`.
+
+Required ML configuration:
+
+```text
+ML_SERVICE_URL=http://127.0.0.1:8000
+ML_REQUEST_TIMEOUT_MS=2500
+ML_REQUEST_RETRIES=2
+```
+
+OpenAPI path documentation:
+
+```text
+src/modules/risk-engine/openapi/risk.openapi.yaml
+```
+
+Integration tests:
+
+```bash
+npm run test:integration
 ```
 
 ## Authentication Flow

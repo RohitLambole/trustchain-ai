@@ -1,0 +1,10 @@
+node_modules/
+dist/
+apps/frontend/node_modules/
+apps/frontend/.next/
+apps/ml-service/storage/
+blockchain/node_modules/
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
+*.log

@@ -1,12 +1,13 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import type { AuditTrail } from "../typechain-types";
 
 describe("AuditTrail", () => {
   async function deployFixture() {
     const [owner, backendWriter, unauthorized] = await ethers.getSigners();
     const AuditTrail = await ethers.getContractFactory("AuditTrail");
-    const auditTrail = await AuditTrail.deploy(owner.address);
+    const auditTrail = await AuditTrail.deploy(owner.address) as unknown as AuditTrail;
     await auditTrail.waitForDeployment();
     return { auditTrail, owner, backendWriter, unauthorized };
   }

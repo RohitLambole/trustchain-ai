@@ -17,4 +17,12 @@ export class MlPredictionRepository extends BaseRepository<MlPrediction> {
       .limit(limit)
       .exec();
   }
+
+  countRecentAnomalies(since: Date) {
+    return MlPredictionModel.countDocuments({ isAnomaly: true, createdAt: { $gte: since } }).exec();
+  }
+
+  findRecentAnomalies(limit = 10) {
+    return MlPredictionModel.find({ isAnomaly: true }).sort({ createdAt: -1 }).limit(limit).exec();
+  }
 }

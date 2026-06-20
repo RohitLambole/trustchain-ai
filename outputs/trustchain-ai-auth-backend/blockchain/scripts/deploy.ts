@@ -10,15 +10,22 @@ async function main() {
 
   const AuditTrail = await ethers.getContractFactory("AuditTrail");
   const auditTrail = await AuditTrail.deploy(deployer.address);
+  const deploymentTx = auditTrail.deploymentTransaction();
   await auditTrail.waitForDeployment();
+  const receipt = deploymentTx ? await deploymentTx.wait() : null;
 
   const address = await auditTrail.getAddress();
+  const explorerUrl = network.config.chainId === 80002 ? `https://amoy.polygonscan.com/address/${address}` : undefined;
   const deployment = {
     network: network.name,
     chainId: network.config.chainId,
     contractName: "AuditTrail",
     address,
+    deployer: deployer.address,
     owner: deployer.address,
+    deploymentTransactionHash: deploymentTx?.hash,
+    deploymentBlockNumber: receipt?.blockNumber,
+    explorerUrl,
     deployedAt: new Date().toISOString()
   };
 
@@ -26,7 +33,7 @@ async function main() {
   mkdirSync(outputDir, { recursive: true });
   writeFileSync(join(outputDir, `${network.name}.json`), `${JSON.stringify(deployment, null, 2)}\n`);
 
-  console.log(`AuditTrail deployed to ${address} on ${network.name}`);
+  console.log(JSON.stringify(deployment, null, 2));
 }
 
 main().catch((error) => {

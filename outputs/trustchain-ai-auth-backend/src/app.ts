@@ -4,9 +4,11 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { corsOrigins, env } from "./config/env";
+import { adminRouter } from "./modules/admin/admin.routes";
 import { authRouter } from "./modules/auth/auth.routes";
 import { blockchainAuditRouter } from "./modules/blockchain-audit/blockchain-audit.routes";
 import { deviceRouter } from "./modules/devices/device.routes";
+import { riskRouter } from "./modules/risk-engine/risk.routes";
 import { errorMiddleware } from "./shared/middleware/error.middleware";
 import { notFoundMiddleware } from "./shared/middleware/not-found.middleware";
 
@@ -28,10 +30,12 @@ export function createApp() {
     res.status(200).json({ status: "ok", service: "trustchain-ai-auth" });
   });
 
+  app.use("/api/admin", adminRouter);
   app.use("/api/auth", authRouter);
   app.use("/api/blockchain-audit", blockchainAuditRouter);
   app.use("/devices", deviceRouter);
   app.use("/api/devices", deviceRouter);
+  app.use("/api/risk", riskRouter);
   app.use(notFoundMiddleware);
   app.use(errorMiddleware);
 

@@ -55,12 +55,58 @@ Deployment output is written to:
 blockchain/deployments/ganache.json
 ```
 
+## Polygon Amoy Deployment
+
+Use Polygon Amoy for hackathon cloud deployments. Required variables:
+
+```text
+AMOY_RPC_URL=https://polygon-amoy.g.alchemy.com/v2/<api-key>
+DEPLOYER_PRIVATE_KEY=0x<deployer-private-key-with-test-matic>
+POLYGONSCAN_API_KEY=<optional-polygonscan-api-key>
+```
+
+Deploy:
+
+```bash
+npm run compile
+npm run deploy:amoy
+```
+
+Deployment output is written to:
+
+```text
+blockchain/deployments/amoy.json
+```
+
+Verify the deployed contract on Polygonscan:
+
+```bash
+npm run verify-contract:amoy -- <deployed-contract-address> <deployer-wallet-address>
+```
+
 ## Grant Backend Writer
 
 ```bash
 AUDIT_TRAIL_CONTRACT_ADDRESS=0x...
 BACKEND_WRITER_ADDRESS=0x...
 npx hardhat run scripts/add-backend-writer.ts --network ganache
+```
+
+For Amoy:
+
+```bash
+AUDIT_TRAIL_CONTRACT_ADDRESS=0x...
+BACKEND_WRITER_ADDRESS=0x...
+npm run grant-writer:amoy
+```
+
+## Amoy Smoke Test
+
+Writes one audit record, checks the transaction receipt for `AuditRecorded`, reads the audit back, and verifies the hash:
+
+```bash
+AUDIT_TRAIL_CONTRACT_ADDRESS=0x...
+npm run smoke:amoy
 ```
 
 ## Verify Audit Hash
@@ -77,7 +123,7 @@ npx hardhat run scripts/verify-audit.ts --network ganache
 Configure the Node backend:
 
 ```text
-BLOCKCHAIN_RPC_URL=http://127.0.0.1:8545
+BLOCKCHAIN_RPC_URL=https://polygon-amoy.g.alchemy.com/v2/<api-key>
 AUDIT_TRAIL_CONTRACT_ADDRESS=0x...
 BACKEND_WRITER_PRIVATE_KEY=0x...
 ```

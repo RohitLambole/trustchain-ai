@@ -6,6 +6,11 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "deploy:ganache": "hardhat run scripts/deploy.ts --network ganache",
+    "deploy:amoy": "hardhat run scripts/deploy.ts --network amoy",
+    "grant-writer:amoy": "hardhat run scripts/add-backend-writer.ts --network amoy",
+    "smoke:amoy": "hardhat run scripts/smoke-test.ts --network amoy",
+    "verify-audit:amoy": "hardhat run scripts/verify-audit.ts --network amoy",
+    "verify-contract:amoy": "hardhat verify --network amoy",
     "ganache": "ganache --chain.chainId 1337 --wallet.totalAccounts 10 --wallet.defaultBalance 1000 --server.host 127.0.0.1 --server.port 8545"
   },
   "devDependencies": {
@@ -17,5 +22,8 @@
     "hardhat": "^2.22.17",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

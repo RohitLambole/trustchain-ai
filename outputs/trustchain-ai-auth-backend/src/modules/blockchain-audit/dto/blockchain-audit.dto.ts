@@ -12,4 +12,8 @@ export const ListBlockchainAuditQuerySchema = z.object({
   offset: z.coerce.number().int().min(0).default(0)
 });
 
+export const AuditIdParamSchema = z.object({
+  auditId: bytes32Schema
+});
+
 export type VerifyBlockchainAuditDto = z.infer<typeof VerifyBlockchainAuditDtoSchema>;

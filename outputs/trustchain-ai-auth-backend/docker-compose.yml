@@ -1,0 +1,36 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: trustchain-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  ml-service:
+    build:
+      context: ./apps/ml-service
+      dockerfile: Dockerfile
+    container_name: trustchain-ml-service
+    restart: unless-stopped
+    environment:
+      ML_ENVIRONMENT: development
+      ML_MODEL_STORAGE_DIR: /app/storage/models
+      ML_TRAIN_ON_STARTUP: "true"
+      ML_SYNTHETIC_ROWS: "5000"
+      ML_CONTAMINATION: "0.04"
+      ML_RANDOM_STATE: "42"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ml_models:/app/storage/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mongodb_data:
+  ml_models:

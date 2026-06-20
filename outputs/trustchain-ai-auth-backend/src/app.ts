@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { corsOrigins, env } from "./config/env";
 import { authRouter } from "./modules/auth/auth.routes";
+import { blockchainAuditRouter } from "./modules/blockchain-audit/blockchain-audit.routes";
 import { deviceRouter } from "./modules/devices/device.routes";
 import { errorMiddleware } from "./shared/middleware/error.middleware";
 import { notFoundMiddleware } from "./shared/middleware/not-found.middleware";
@@ -28,6 +29,7 @@ export function createApp() {
   });
 
   app.use("/api/auth", authRouter);
+  app.use("/api/blockchain-audit", blockchainAuditRouter);
   app.use("/devices", deviceRouter);
   app.use("/api/devices", deviceRouter);
   app.use(notFoundMiddleware);

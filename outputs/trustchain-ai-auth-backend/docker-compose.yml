@@ -31,6 +31,19 @@ services:
       timeout: 5s
       retries: 3
 
+  ganache:
+    image: trufflesuite/ganache:v7.9.2
+    container_name: trustchain-ganache
+    restart: unless-stopped
+    command:
+      - --chain.chainId=1337
+      - --wallet.totalAccounts=10
+      - --wallet.defaultBalance=1000
+      - --server.host=0.0.0.0
+      - --server.port=8545
+    ports:
+      - "8545:8545"
+
 volumes:
   mongodb_data:
   ml_models:

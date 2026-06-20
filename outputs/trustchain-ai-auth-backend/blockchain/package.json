@@ -1,0 +1,21 @@
+{
+  "name": "trustchain-ai-blockchain-audit",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:ganache": "hardhat run scripts/deploy.ts --network ganache",
+    "ganache": "ganache --chain.chainId 1337 --wallet.totalAccounts 10 --wallet.defaultBalance 1000 --server.host 127.0.0.1 --server.port 8545"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^20.14.12",
+    "ethers": "^6.13.4",
+    "ganache": "^7.9.2",
+    "hardhat": "^2.22.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

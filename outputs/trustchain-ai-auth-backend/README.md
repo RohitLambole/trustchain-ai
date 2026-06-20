@@ -311,6 +311,45 @@ import {
 } from "./modules/risk-engine";
 ```
 
+## Blockchain Audit Layer
+
+The blockchain audit layer stores tamper-evident hashes for critical security events only. Sensitive banking data remains off-chain.
+
+On-chain fields:
+
+```text
+auditId
+userId
+eventType
+riskLevel
+eventHash
+timestamp
+```
+
+Supported events:
+
+```text
+HIGH_RISK_LOGIN_DECISION
+ACCOUNT_LOCK_EVENT
+ACCOUNT_RECOVERY_APPROVAL
+PRIVILEGED_ACCESS_CHANGE
+INSIDER_THREAT_ALERT
+KYC_DECISION
+RISK_ENGINE_FINAL_DECISION
+```
+
+Contract, Hardhat, Ganache, deployment, and verification details:
+
+[blockchain/README.md](./blockchain/README.md)
+
+Backend APIs:
+
+```text
+GET  /api/blockchain-audit
+GET  /api/blockchain-audit/:auditId
+POST /api/blockchain-audit/verify
+```
+
 ## Error Handling
 
 The API uses typed application errors:

@@ -7,13 +7,20 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
-    "lint": "eslint \"src/**/*.ts\""
+    "seed": "tsx src/bootstrap/seed.ts",
+    "seed:prod": "node dist/bootstrap/seed.js",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test:integration": "tsx --test tests/integration/*.test.ts",
+    "dev:stack": "docker compose up --build",
+    "dev:stack:down": "docker compose down -v"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "axios": "^1.7.9",
+    "ethers": "^6.17.0",
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
     "helmet": "^7.1.0",
@@ -34,9 +41,11 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.14.12",
     "@types/qrcode": "^1.5.5",
+    "@types/supertest": "^6.0.2",
     "@types/speakeasy": "^2.0.10",
     "@types/uuid": "^10.0.0",
     "eslint": "^9.8.0",
+    "supertest": "^7.0.0",
     "tsx": "^4.16.2",
     "typescript": "^5.5.4"
   }

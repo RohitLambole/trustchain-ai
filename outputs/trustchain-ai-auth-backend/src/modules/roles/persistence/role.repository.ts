@@ -10,4 +10,19 @@ export class RoleRepository extends BaseRepository<Role> {
   findByName(name: string) {
     return RoleModel.findOne({ name: name.toUpperCase() }).exec();
   }
+
+  findOrCreateSystemRole(name: string, description?: string) {
+    return RoleModel.findOneAndUpdate(
+      { name: name.toUpperCase() },
+      {
+        $setOnInsert: {
+          name: name.toUpperCase(),
+          description: description ?? `${name.toUpperCase()} system role`,
+          permissions: [],
+          isSystemRole: true
+        }
+      },
+      { upsert: true, new: true }
+    ).exec();
+  }
 }

@@ -45,7 +45,16 @@ export class AuthService {
       throw new ConflictError("Email is already registered");
     }
 
-    const roleDocs = await Promise.all(dto.roleNames.map((roleName) => this.roles.findByName(roleName)));
+    const roleDocs = await Promise.all(
+      dto.roleNames.map(async (roleName) => {
+        const role = await this.roles.findByName(roleName);
+        if (role) return role;
+        if (roleName.toUpperCase() === "CUSTOMER") {
+          return this.roles.findOrCreateSystemRole("CUSTOMER", "Customer account holder with access to personal security posture.");
+        }
+        return null;
+      })
+    );
     const missingRole = roleDocs.findIndex((role) => !role);
     if (missingRole >= 0) {
       throw new ForbiddenError(`Unknown role: ${dto.roleNames[missingRole]}`);

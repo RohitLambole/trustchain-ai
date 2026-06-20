@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Asus\\Documents\\Codex\\2026-06-17\\you-are-a-principal-software-architect\\outputs\\trustchain-ai-auth-backend\\blockchain\\contracts\\AuditTrail.sol": {
+      "lastModificationDate": 1781933173084,
+      "contentHash": "6cdf8c9adfd0b316e24ae61b2d6136bb",
+      "sourceName": "contracts/AuditTrail.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "AuditTrail"
+      ]
+    }
+  }
+}

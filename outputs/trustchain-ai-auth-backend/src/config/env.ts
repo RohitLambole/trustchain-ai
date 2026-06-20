@@ -17,7 +17,14 @@ const EnvSchema = z.object({
   PASSWORD_BCRYPT_ROUNDS: z.coerce.number().int().min(10).max(15).default(12),
   TOTP_ISSUER: z.string().default("TrustChain AI"),
   FIELD_ENCRYPTION_KEY_BASE64: z.string().min(40),
-  PASSWORD_RESET_TTL_SECONDS: z.coerce.number().int().positive().default(900)
+  PASSWORD_RESET_TTL_SECONDS: z.coerce.number().int().positive().default(900),
+  BOOTSTRAP_DATABASE_ON_START: z.coerce.boolean().default(false),
+  ML_SERVICE_URL: z.string().url().default("http://127.0.0.1:8000"),
+  ML_REQUEST_TIMEOUT_MS: z.coerce.number().int().positive().default(2500),
+  ML_REQUEST_RETRIES: z.coerce.number().int().min(0).max(5).default(2),
+  BLOCKCHAIN_RPC_URL: z.string().url(),
+  AUDIT_TRAIL_CONTRACT_ADDRESS: z.string().regex(/^0x[a-fA-F0-9]{40}$/).optional(),
+  BACKEND_WRITER_PRIVATE_KEY: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional()
 });
 
 export const env = EnvSchema.parse(process.env);

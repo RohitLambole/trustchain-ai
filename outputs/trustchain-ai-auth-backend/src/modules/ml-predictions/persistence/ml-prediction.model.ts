@@ -9,7 +9,9 @@ const MlPredictionSchema = new Schema<MlPrediction>(
     modelVersion: { type: String, required: true, index: true },
     features: { type: Schema.Types.Mixed, required: true },
     anomalyScore: { type: Number, min: 0, max: 1, required: true, index: true },
-    isAnomaly: { type: Boolean, required: true, index: true }
+    isAnomaly: { type: Boolean, required: true, index: true },
+    riskLevel: { type: String, enum: ["LOW", "MEDIUM", "HIGH", "CRITICAL"], index: true },
+    explanation: [{ type: String }]
   },
   { timestamps: { createdAt: true, updatedAt: false }, versionKey: false }
 );

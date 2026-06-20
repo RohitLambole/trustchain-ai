@@ -1,9 +1,11 @@
 import { connectDatabase } from "./config/database";
 import { env } from "./config/env";
 import { createApp } from "./app";
+import { runStartupBootstrap } from "./bootstrap/startup-bootstrap";
 
 async function main() {
   await connectDatabase();
+  await runStartupBootstrap();
   const app = createApp();
 
   app.listen(env.PORT, () => {
